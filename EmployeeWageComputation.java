@@ -2,8 +2,8 @@ public class EmployeeWageComputation {
 
 	public static void main(String[] args) {
 
-		int isPresent = 1;
-		int isPartTime =2;
+		final int isPresent = 1;
+		final int isPartTime =2;
 		int wagePerHour = 20;
 		int empWorkingHour;
 
@@ -11,17 +11,21 @@ public class EmployeeWageComputation {
 
 		int empCheck = (int)(Math.floor(Math.random() * 10)) % 3;
 
-		if (empCheck == isPresent) {
-			empWorkingHour = 8;
+		switch (empCheck) {
+		case isPresent: {
+			empWorkingHour =8;
 			System.out.println("Employee is Present");
+			break;
 		}
-		else if (empCheck == isPartTime) {
-			empWorkingHour = 4;
+
+		case isPartTime: {
+			empWorkingHour =4;
 			System.out.println("Employee is Part Time Present");
+			break;
 		}
-		else {
-			empWorkingHour = 0;
-			System.out.println("Employee is Absent");
+		default:
+			empWorkingHour =0;
+			System.out.println("employee is Absent");
 		}
 
 		int empDailyWage = wagePerHour * empWorkingHour ;
@@ -29,4 +33,3 @@ public class EmployeeWageComputation {
 		System.out.println("Daily wage of Employee: "+empDailyWage);
 	}
 }
-
