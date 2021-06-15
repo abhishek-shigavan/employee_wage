@@ -1,17 +1,32 @@
+/**
+ * EmployeeWageComputation --- Program to check Employee is 
+ * 			       Present / Absent.
+ * 
+ * @author Abhishek Shigavan
+ *
+ */
 public class EmployeeWageComputation {
+	
+	//constant variables
+	public static final int IS_PRESENT =1;
+/**
+ * Checking & printing attendance
+ * 
+ * @return No return	
+ */	
+    public static void main(String[] args) {
 
-        public static void main(String[] args) {
+            System.out.println("Welcome to Employee Wage Computation Program...!!");
 
-                int isPresent = 1;
-
-                System.out.println("Welcome to Employee Wage Computation Program...!!");
-
-                int empCheck = (int)(Math.floor(Math.random() * 10)) % 2;
-
-                if (empCheck == isPresent)
-                        System.out.println("Employee is Present");
-                else
-                        System.out.println("Employee is Absent");
-        }
+            int empAttendance = (int)(Math.floor(Math.random() * 10)) % 2;
+            
+            //checking attendance
+            if (empAttendance == IS_PRESENT) {
+                    System.out.println("Employee is Present");
+            }
+            else {
+                    System.out.println("Employee is Absent");
+            }
+    }
 }
 
