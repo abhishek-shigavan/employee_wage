@@ -1,18 +1,17 @@
 /**
  * EmployeeWageComputation	-- Computing monthly wage of 
- * 				employee of different companies
+ * 			           employee of different companies
  *                                                   
  * @author Abhishek Shigavan
  *
  */
-public class EmployeeWageComputation {
+public class EmployeeWageComputation implements EmpWageInterface{
 	
 	//constant variables 
 	public static final int IS_PRESENT =1;
 	public static final int IS_PART_TIME =2;
 	
 	private int no_OfCompany =0;
-	
 	//defining array to store object of different companies
 	private CompanyEmpWage[] companyWageArray;
 	
@@ -27,8 +26,8 @@ public class EmployeeWageComputation {
  * 	
  * @return No return
  */
-	private void addCompanyEmpWage(String company_Name, int wage_Per_Hour, int working_Day_Per_Month, int max_Working_Hour) {
-		
+	public void addCompanyEmpWage(String company_Name, int wage_Per_Hour, int working_Day_Per_Month, int max_Working_Hour) {
+	
 		//storing companies object into array
 		companyWageArray[no_OfCompany] = new CompanyEmpWage(company_Name, wage_Per_Hour, working_Day_Per_Month, max_Working_Hour);
 		//incrementing index for next company
@@ -37,11 +36,11 @@ public class EmployeeWageComputation {
 /**
  * This method iterates through company array
  * & passes each company object to getEmployeeWage() 
- * method to compute monthly wage
- *
- * @retrun No return	
+ * method to compute monthly wage	
+ * 
+ * @return No return
  */
-	private void computeEmpWage() {
+	public void computeEmpWage() {
 		
 		for(int i=0; i < no_OfCompany; i++) {
 			
@@ -94,16 +93,16 @@ public class EmployeeWageComputation {
 	}
 /**
  * Prints out welcome message.
- *  
- * Calling methods
+ * Calling getEmployeeWage for multiple 
+ * companies using multiple object
  *  
  * @return No return value.
  */	
 	public static void main(String[] args) {
 		
 		System.out.println("Welcome to Employee Wage Computation Program...!!");
-		//creating object for multiple company
-		EmployeeWageComputation employeeWgeComputation = new EmployeeWageComputation();		
+
+		EmpWageInterface employeeWgeComputation = new EmployeeWageComputation();		
 		
 		//passing company details to create company object & storing it in array
 		employeeWgeComputation.addCompanyEmpWage("D-Mart", 30, 25, 120);
