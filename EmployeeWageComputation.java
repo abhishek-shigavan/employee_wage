@@ -1,6 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
 /**
  * EmployeeWageComputation	-- Computing monthly wage of 
- * 			           employee of different companies
+ * 				   employee of different companies
  *                                                   
  * @author Abhishek Shigavan
  *
@@ -11,30 +13,29 @@ public class EmployeeWageComputation implements EmpWageInterface{
 	public static final int IS_PRESENT =1;
 	public static final int IS_PART_TIME =2;
 	
-	private int no_OfCompany =0;
-	//defining array to store object of different companies
-	private CompanyEmpWage[] companyWageArray;
+	//defining ArrayList to store object of different companies
+	private List<CompanyEmpWage> companyEmpWageList;
 	
-	//It will create array when object is created
+	//It will create ArrayList when object is created
 	public EmployeeWageComputation() {
-		//creating array
-		companyWageArray = new CompanyEmpWage[5];
+		//creating ArrayList
+		companyEmpWageList = new ArrayList<CompanyEmpWage>();
 	}
 /**
- * This method create company object with its details
- * and store it into array (companyWageArray[])
+ * This method create company object with its properties
+ * and store it into ArrayList (companyEmpWageList)
  * 	
  * @return No return
  */
 	public void addCompanyEmpWage(String company_Name, int wage_Per_Hour, int working_Day_Per_Month, int max_Working_Hour) {
 	
-		//storing companies object into array
-		companyWageArray[no_OfCompany] = new CompanyEmpWage(company_Name, wage_Per_Hour, working_Day_Per_Month, max_Working_Hour);
-		//incrementing index for next company
-		no_OfCompany++;
+		//Creating object of CompanyEmpWage with company properties
+		CompanyEmpWage company = new CompanyEmpWage(company_Name, wage_Per_Hour, working_Day_Per_Month, max_Working_Hour);
+		//storing into ArrayList
+		companyEmpWageList.add(company);
 	}
 /**
- * This method iterates through company array
+ * This method iterates through company ArrayList
  * & passes each company object to getEmployeeWage() 
  * method to compute monthly wage	
  * 
@@ -42,10 +43,11 @@ public class EmployeeWageComputation implements EmpWageInterface{
  */
 	public void computeEmpWage() {
 		
-		for(int i=0; i < no_OfCompany; i++) {
+		for(int i=0; i < companyEmpWageList.size(); i++) {
 			
-			companyWageArray[i].setEmpMonthlyWage(this.getEmployeeWage(companyWageArray[i]));
-			System.out.println(companyWageArray[i]);
+			CompanyEmpWage company = companyEmpWageList.get(i);
+			company.setEmpMonthlyWage(this.getEmployeeWage(company));
+			System.out.println(companyEmpWageList.get(i));
 		}
 	}
 /**
@@ -66,6 +68,7 @@ public class EmployeeWageComputation implements EmpWageInterface{
 			//checking for maximum working day / hours limit
 			while(totalWorkingDay <= companyEmpWage.getWorking_Day_Per_Month() && totalWorkingHour <= companyEmpWage.getMax_Working_Hour() ) 
 			{	
+				totalWorkingDay++;
 				//generating attendance
 				int empAttendance = (int)(Math.floor(Math.random() * 10)) % 3;
 
@@ -93,22 +96,20 @@ public class EmployeeWageComputation implements EmpWageInterface{
 	}
 /**
  * Prints out welcome message.
- * Calling getEmployeeWage for multiple 
- * companies using multiple object
  *  
  * @return No return value.
  */	
 	public static void main(String[] args) {
 		
 		System.out.println("Welcome to Employee Wage Computation Program...!!");
-
+		
 		EmpWageInterface employeeWgeComputation = new EmployeeWageComputation();		
 		
-		//passing company details to create company object & storing it in array
-		employeeWgeComputation.addCompanyEmpWage("D-Mart", 30, 25, 120);
+		//passing company details to create company object & storing it in ArrayList
+		employeeWgeComputation.addCompanyEmpWage("D-Mart", 30, 2, 120);
 		employeeWgeComputation.addCompanyEmpWage("Reliance", 40, 22, 110);
 		employeeWgeComputation.addCompanyEmpWage("Big Bazar", 35, 27, 105);
 		//calling compute wage 
-		employeeWgeComputation.computeEmpWage();
+		employeeWgeComputation.computeEmpWage();	
 	}
 }
