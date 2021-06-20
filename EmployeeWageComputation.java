@@ -1,6 +1,6 @@
 /**
- * EmployeeWageComputation	-- Computing monthly wage
- *                          of employee of different companies
+ * EmployeeWageComputation	-- Computing monthly wage of 
+ * 				employee of different companies
  *                                                   
  * @author Abhishek Shigavan
  *
@@ -10,19 +10,44 @@ public class EmployeeWageComputation {
 	//constant variables 
 	public static final int IS_PRESENT =1;
 	public static final int IS_PART_TIME =2;
-	//instance variables
-	private String company_Name;
-	private int wage_Per_Hour;
-	private int working_Day_Per_Month;
-	private int max_Working_Hour;
-	private int empMonthlyWage;
 	
-	public EmployeeWageComputation(String company_Name, int wage_Per_Hour, int working_Day_Per_Month,int max_Working_Hour) {
+	private int no_OfCompany =0;
+	
+	//defining array to store object of different companies
+	private CompanyEmpWage[] companyWageArray;
+	
+	//It will create array when object is created
+	public EmployeeWageComputation() {
+		//creating array
+		companyWageArray = new CompanyEmpWage[5];
+	}
+/**
+ * This method create company object with its details
+ * and store it into array (companyWageArray[])
+ * 	
+ * @return No return
+ */
+	private void addCompanyEmpWage(String company_Name, int wage_Per_Hour, int working_Day_Per_Month, int max_Working_Hour) {
 		
-		this.company_Name = company_Name;
-		this.wage_Per_Hour = wage_Per_Hour;
-		this.working_Day_Per_Month = working_Day_Per_Month;
-		this.max_Working_Hour = max_Working_Hour;
+		//storing companies object into array
+		companyWageArray[no_OfCompany] = new CompanyEmpWage(company_Name, wage_Per_Hour, working_Day_Per_Month, max_Working_Hour);
+		//incrementing index for next company
+		no_OfCompany++;
+	}
+/**
+ * This method iterates through company array
+ * & passes each company object to getEmployeeWage() 
+ * method to compute monthly wage
+ *
+ * @retrun No return	
+ */
+	private void computeEmpWage() {
+		
+		for(int i=0; i < no_OfCompany; i++) {
+			
+			companyWageArray[i].setEmpMonthlyWage(this.getEmployeeWage(companyWageArray[i]));
+			System.out.println(companyWageArray[i]);
+		}
 	}
 /**
  * This method checks attendance & accordingly
@@ -34,15 +59,13 @@ public class EmployeeWageComputation {
  * 
  * @return No return	
  */
-	public void getEmployeeWage() {
+	public int getEmployeeWage(CompanyEmpWage companyEmpWage) {
 		
 		//local variables
-		int empWorkHours =0;
-		int totalWorkingHour =0;
-		int totalWorkingDay =0;
+		int empWorkHours =0, totalWorkingHour =0, totalWorkingDay =0;
 	
 			//checking for maximum working day / hours limit
-			while(totalWorkingDay <= working_Day_Per_Month && totalWorkingHour <= max_Working_Hour ) 
+			while(totalWorkingDay <= companyEmpWage.getWorking_Day_Per_Month() && totalWorkingHour <= companyEmpWage.getMax_Working_Hour() ) 
 			{	
 				//generating attendance
 				int empAttendance = (int)(Math.floor(Math.random() * 10)) % 3;
@@ -67,17 +90,12 @@ public class EmployeeWageComputation {
 				totalWorkingHour += empWorkHours;
 			}
 		//computing monthly wage
-		empMonthlyWage = totalWorkingHour * wage_Per_Hour;
-	}
-	
-	@Override
-	public String toString() {
-		return "EmployeeWageComputation [Company Name = " + company_Name + ", Monthly Wage Of Employee = " + empMonthlyWage + "]";
+		return totalWorkingHour * companyEmpWage.getWage_Per_Hour();
 	}
 /**
  * Prints out welcome message.
- * Calling getEmployeeWage for multiple 
- * companies using multiple object
+ *  
+ * Calling methods
  *  
  * @return No return value.
  */	
@@ -85,18 +103,13 @@ public class EmployeeWageComputation {
 		
 		System.out.println("Welcome to Employee Wage Computation Program...!!");
 		//creating object for multiple company
-		EmployeeWageComputation dMart = new EmployeeWageComputation("D-Mart", 30, 25, 100);
-		EmployeeWageComputation reliance = new EmployeeWageComputation("Reliance", 40, 25, 120);
-		EmployeeWageComputation bigBazar = new EmployeeWageComputation("Big Bazar", 35, 22, 105);
+		EmployeeWageComputation employeeWgeComputation = new EmployeeWageComputation();		
 		
-		dMart.getEmployeeWage();
-		System.out.println(dMart);
-		
-		reliance.getEmployeeWage();
-		System.out.println(reliance);
-		
-		bigBazar.getEmployeeWage();
-		System.out.println(bigBazar);
+		//passing company details to create company object & storing it in array
+		employeeWgeComputation.addCompanyEmpWage("D-Mart", 30, 25, 120);
+		employeeWgeComputation.addCompanyEmpWage("Reliance", 40, 22, 110);
+		employeeWgeComputation.addCompanyEmpWage("Big Bazar", 35, 27, 105);
+		//calling compute wage 
+		employeeWgeComputation.computeEmpWage();
 	}
 }
-
