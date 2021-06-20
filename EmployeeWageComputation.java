@@ -1,6 +1,7 @@
 /**
- * EmployeeWageComputation --- Program to compute Monthly Wage
- * 
+ * EmployeeWageComputation	-- Computing monthly wage
+ *                          of employee of different companies
+ *                                                   
  * @author Abhishek Shigavan
  *
  */
@@ -9,28 +10,23 @@ public class EmployeeWageComputation {
 	//constant variables 
 	public static final int IS_PRESENT =1;
 	public static final int IS_PART_TIME =2;
-	public static final int WAGE_PER_HOUR =20;
-	public static final int WORKING_DAY_PER_MONTH =20;
-	public static final int MAX_WORKING_HOUR =100;
 /**
- * Checking attendance & according to it
- * set value of working hours
- * Sum up this working hours to get total working hours.
- * Compute Monthly wage using total working hours.
+ * This method checks attendance & accordingly
+ * sets value of working hour.
+ * Sum up this working hours to get total working
+ * hours
+ * Computes monthly wage using total working hour
+ * & wage per hour 
  * 
  * @return No return	
  */
-	public static void getEmployeeWage() {
+	public static void getEmployeeWage(String company_Name, int wage_Per_Hour, int working_Day_Per_Month, int max_Working_Hour) {
 		
 		//local variables
-		int empWorkHours =0;
-		int totalWorkingHour =0;
-		
-		//ensuring wage will be computed till working day limit
-		for(int i=1; i<=WORKING_DAY_PER_MONTH; i++) {
-			
+		int empWorkHours =0, totalWorkingHour =0, totalWorkingDay =0;
+	
 			//checking for maximum working day / hours limit
-			if (i <= WORKING_DAY_PER_MONTH && totalWorkingHour <= MAX_WORKING_HOUR ) 
+			while(totalWorkingDay <= working_Day_Per_Month && totalWorkingHour <= max_Working_Hour ) 
 			{	
 				//generating attendance
 				int empAttendance = (int)(Math.floor(Math.random() * 10)) % 3;
@@ -54,24 +50,23 @@ public class EmployeeWageComputation {
 				//adding working hours into total working hours
 				totalWorkingHour += empWorkHours;
 			}
-			else {
-				break;
-			}
-		}
-		//computing monthly wage 
-		int empMonthlyWage = totalWorkingHour * WAGE_PER_HOUR;
-		System.out.println("Monthly Wage of Employee : " +empMonthlyWage);
+		//computing monthly wage
+		int empMonthlyWage = totalWorkingHour * wage_Per_Hour;
+		System.out.println("Company : "+company_Name+"\n Monthly Wage of "+company_Name+" Employee : " +empMonthlyWage);
 	}
 /**
  * Prints out welcome message.
  * Calling getEmployeeWage method 
  * 
  * @return No return value.
- */	
+ */
 	public static void main(String[] args) {
-		
+
 		System.out.println("Welcome to Employee Wage Computation Program...!!");
-		
-		getEmployeeWage();	
+		//passing values for multiple companies
+		getEmployeeWage("D-mart", 30, 25, 100 );
+		getEmployeeWage("Reliance", 40, 25, 120 );
+		getEmployeeWage("Big-Bazar", 35, 22, 105 );
 	}
 }
+
