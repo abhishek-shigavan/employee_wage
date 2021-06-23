@@ -13,4 +13,4 @@
 11) UC11  - Handling Employee Wage of Multiple Company using Interface Approch
 12) UC12  - Using ArrayList to manage multiple Companies
 13) UC13  - Storing Daily Wage along with Total Wage
-14) Uc14  - Printing Total Wage of Company by taking Company Name 
+14) UC14  - Printing Total Wage of Company by taking Company Name 
