@@ -4,4 +4,6 @@ public interface EmpWageInterface {
 	
 	public void computeEmpWage();
 
+	public void viewDailyWageRecord();
+
 }
