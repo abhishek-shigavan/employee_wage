@@ -13,13 +13,15 @@ public class EmployeeWageComputation implements EmpWageInterface{
 	public static final int IS_PRESENT =1;
 	public static final int IS_PART_TIME =2;
 	
-	//defining ArrayList to store object of different companies
+	//defining ArrayList to store object of different companies & storing wage
 	private List<CompanyEmpWage> companyEmpWageList;
+	private List<CompanyWageStore> companyWageStoreList;
 	
 	//It will create ArrayList when object is created
 	public EmployeeWageComputation() {
 		//creating ArrayList
 		companyEmpWageList = new ArrayList<CompanyEmpWage>();
+		companyWageStoreList = new ArrayList<CompanyWageStore>();
 	}
 /**
  * This method create company object with its properties
@@ -46,8 +48,24 @@ public class EmployeeWageComputation implements EmpWageInterface{
 		for(int i=0; i < companyEmpWageList.size(); i++) {
 			
 			CompanyEmpWage company = companyEmpWageList.get(i);
+			//calling getEmployeeWage to get monthly wage & setting it as Employee monthly wage
 			company.setEmpMonthlyWage(this.getEmployeeWage(company));
-			System.out.println(companyEmpWageList.get(i));
+		
+			System.out.println("\n Monthly Report :");
+			System.out.println(companyEmpWageList.get(i)+"\n");
+		}
+	}
+/**
+ * This methods prints employees day wise
+ * daily wage along with total wage
+ * 
+ * @return No return	
+ */
+	public void viewDailyWageRecord() {
+		
+		for(int i=0; i < companyWageStoreList.size(); i++) {
+			//printing companyWageStoreList data
+			System.out.println(companyWageStoreList.get(i));
 		}
 	}
 /**
@@ -57,13 +75,13 @@ public class EmployeeWageComputation implements EmpWageInterface{
  * hours
  * Computes monthly wage using total working hour
  * & wage per hour 
- * 
+ * Storing daily wage along with total wage
  * @return No return	
  */
 	public int getEmployeeWage(CompanyEmpWage companyEmpWage) {
 		
 		//local variables
-		int empWorkHours =0, totalWorkingHour =0, totalWorkingDay =0;
+		int empWorkHours =0, totalWorkingHour =0, totalWorkingDay =0, totalEmployeeWage =0;
 	
 			//checking for maximum working day / hours limit
 			while(totalWorkingDay <= companyEmpWage.getWorking_Day_Per_Month() && totalWorkingHour <= companyEmpWage.getMax_Working_Hour() ) 
@@ -87,12 +105,24 @@ public class EmployeeWageComputation implements EmpWageInterface{
 						break;
 					}
 				}
-				
 				//adding working hours into total working hours
 				totalWorkingHour += empWorkHours;
+				
+				//computing daily wage
+				int dailyWage = companyEmpWage.getWage_Per_Hour() * empWorkHours;
+				//computing totalEmployeeWage
+				totalEmployeeWage = totalEmployeeWage + dailyWage;
+				//storing company name
+				String company_Name = companyEmpWage.getCompany_Name();
+				
+				//creating new object & passing properties to object
+				CompanyWageStore companyWageStore = new CompanyWageStore(company_Name, totalWorkingDay, dailyWage, totalEmployeeWage);
+				//adding to ArrayList
+				companyWageStoreList.add(companyWageStore);
+				
 			}
-		//computing monthly wage
-		return totalWorkingHour * companyEmpWage.getWage_Per_Hour();
+		
+			return totalEmployeeWage;
 	}
 /**
  * Prints out welcome message.
@@ -106,10 +136,13 @@ public class EmployeeWageComputation implements EmpWageInterface{
 		EmpWageInterface employeeWgeComputation = new EmployeeWageComputation();		
 		
 		//passing company details to create company object & storing it in ArrayList
-		employeeWgeComputation.addCompanyEmpWage("D-Mart", 30, 2, 120);
+		employeeWgeComputation.addCompanyEmpWage("D-Mart", 30, 20, 120);
 		employeeWgeComputation.addCompanyEmpWage("Reliance", 40, 22, 110);
 		employeeWgeComputation.addCompanyEmpWage("Big Bazar", 35, 27, 105);
 		//calling compute wage 
-		employeeWgeComputation.computeEmpWage();	
+		employeeWgeComputation.computeEmpWage();
+		
+		employeeWgeComputation.viewDailyWageRecord();
+		
 	}
 }
