@@ -6,4 +6,5 @@ public interface EmpWageInterface {
 
 	public void viewDailyWageRecord();
 
+	public void getTotalWageByName(String company_Name);
 }
