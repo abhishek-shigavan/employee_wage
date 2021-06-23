@@ -69,6 +69,32 @@ public class EmployeeWageComputation implements EmpWageInterface{
 		}
 	}
 /**
+ * This method matches given company name
+ * with company wage list & prints total wage of 
+ * that company
+ * 
+ * @return No return	
+ */
+	public void getTotalWageByName(String company_Name) {
+		
+		boolean flag = false;
+		//iterating through list
+		for(int i =0; i < companyEmpWageList.size(); i++) {
+			//checking for match
+			if(companyEmpWageList.get(i).getCompany_Name().equals(company_Name)) {
+				//getting total wage
+				int totalWage = companyEmpWageList.get(i).getEmpMonthlyWage();
+				
+				System.out.println("\n Total Employee Wage of "+company_Name+" Company is : "+totalWage);
+				flag = true;
+			}
+		}
+		if(flag == false) {
+			
+			System.out.println("No such Company exists...Enter correct name");
+		}
+	}
+/**
  * This method checks attendance & accordingly
  * sets value of working hour.
  * Sum up this working hours to get total working
@@ -143,6 +169,9 @@ public class EmployeeWageComputation implements EmpWageInterface{
 		employeeWgeComputation.computeEmpWage();
 		
 		employeeWgeComputation.viewDailyWageRecord();
+
+		//getting total wage by company name
+		employeeWgeComputation.getTotalWageByName("D-Mart");
 		
 	}
 }
